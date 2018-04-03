@@ -119,8 +119,6 @@ def echo(bot, update):
         o.sendMsg(bot, update, random.choice(texts))
     elif "pebble" in r:
         o.sendMsg(bot, update, u"benim bi pebble vardı")
-    elif "pebble" in r:
-        o.sendMsg(bot, update, u"benim bi pebble vardı")        
     elif "mesaj" in r:
         o.sendMsg(bot, update, u"1 mesaj artı n yıllık tecrübe o")
     elif "off" in r:
