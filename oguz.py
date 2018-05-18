@@ -10,6 +10,7 @@ import logging
 import random
 from string import maketrans
 import time
+from ip import facecount
 
 root = logging.getLogger()
 root.setLevel(logging.INFO)
@@ -235,6 +236,18 @@ def echo(bot, update):
     else:
         pass
 
+def echoPhoto(bot, update):
+    global o
+    if update.message.photo:
+        print(update.message.photo)
+
+    photo_file = bot.get_file(update.message.photo[-1].file_id)
+    photo_file.download('faces.jpg')
+    faces = facecount('faces.jpg')
+    if faces > 2:
+        mesaj = str(faces) + " kişi geziyormuşsunuz biz gelmeyiz"
+        o.sendMsg(bot, update, mesaj)
+
 def error(bot, update, error):
     logger.warn('Update "%s" caused error "%s"' % (update, error))
 
@@ -251,8 +264,10 @@ def main():
     
 
     echo_handler = MessageHandler(Filters.text, echo)
+    photo_handler = MessageHandler(Filters.photo, echoPhoto)
 
     dp.add_handler(echo_handler)
+    dp.add_handler(photo_handler)
 
     updater.start_polling(timeout=5)
     updater.idle()
